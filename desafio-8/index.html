@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <form>
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="email" name="nome" id="nome" placeholder="inserir nome...">
+        </div>
+        <div>
+            <br>
+            <br>
+            <label for="endereco">Endereço:</label>
+            <input type="email" name="endereco" id="endereco" placeholder="inserir endereco">
+            <br>
+            <br>
+        </div>
+        <div>
+            <br>
+            <label>Dias de funcionamento da semana:</label>
+            <label for="domingo">Domingo</label>
+            <input class="diaSemana" type="checkbox" name="diasSemana" id="domingo">
+            <label for="segunda">Segunda</label>
+            <input class="diaSemana" type="checkbox" name="diasSemana" id="segunda">
+            <label for="terca">Terça</label>
+            <input class="diaSemana" type="checkbox" name="diasSemana" id="terca">
+            <label for="quarta">Quarta</label>
+            <input class="diaSemana" type="checkbox" name="diasSemana" id="quarta">
+            <label for="quinta">Quinta</label>
+            <input class="diaSemana" type="checkbox" name="diasSemana" id="quinta">
+            <label for="sexta">Sexta</label>
+            <input class="diaSemana" type="checkbox" name="diasSemana" id="sexta">
+            <label for="sabado">Sábado</label>
+            <input class="diaSemana" type="checkbox" name="diasSemana" id="sabado">
+        </div>
+        <br>
+        <br>
+        <div>
+            <label for="abertura">Horário de abertura:</label>
+            <input type="time" name="abertura" id="abertura">
+            <br>
+            <br>
+            <br>
+            <div>
+                <label for="fechamento">Horário de fechamento:</label>
+                <input type="time" name="fechamento" id="fechamento">
+            </div>
+        </div>
+    </form>
+
+    <script>
+        // Adicionando manipuladores de eventos para cada campo
+        const nomeInput = document.getElementById('nome');
+        const enderecoInput = document.getElementById('endereco');
+        const aberturaInput = document.getElementById('abertura');
+        const fechamentoInput = document.getElementById('fechamento');
+        const diasSemanaCheckboxes = document.querySelectorAll('.diaSemana');
+
+        nomeInput.addEventListener('keydown', handleEnter);
+        enderecoInput.addEventListener('keydown', handleEnter);
+        aberturaInput.addEventListener('keydown', handleEnter);
+        fechamentoInput.addEventListener('keydown', handleEnter);
+
+        let currentValues = {}; // Armazenar valores atuais dos campos
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                // Armazenar valores atuais dos campos
+                currentValues = {
+                    nome: nomeInput.value,
+                    endereco: enderecoInput.value,
+                    abertura: aberturaInput.value,
+                    fechamento: fechamentoInput.value,
+                };
+
+                console.log('Dados atualizados:', currentValues);
+            }
+        }
+
+        // Recuperar dados do localStorage ao carregar a página
+        window.addEventListener('load', function() {
+            const savedValues = JSON.parse(localStorage.getItem('formValues')) || {};
+            nomeInput.value = savedValues.nome || '';
+            enderecoInput.value = savedValues.endereco || '';
+            aberturaInput.value = savedValues.abertura || '';
+            fechamentoInput.value = savedValues.fechamento || '';
+
+            diasSemanaCheckboxes.forEach(checkbox => {
+                checkbox.checked = savedValues.diasSemana && savedValues.diasSemana.includes(checkbox.id);
+            });
+        });
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                const currentValues = {
+                    nome: nomeInput.value,
+                    endereco: enderecoInput.value,
+                    abertura: aberturaInput.value,
+                    fechamento: fechamentoInput.value,
+                    diasSemana: Array.from(diasSemanaCheckboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.id),
+                };
+
+                // Salvar dados no localStorage
+                localStorage.setItem('formValues', JSON.stringify(currentValues));
+            }
+        }
+
+        // Adicionar manipulador de evento para Enter
+        nomeInput.addEventListener('keydown', handleEnter);
+        enderecoInput.addEventListener('keydown', handleEnter);
+        aberturaInput.addEventListener('keydown', handleEnter);
+        fechamentoInput.addEventListener('keydown', handleEnter);
+        diasSemanaCheckboxes.forEach(checkbox => checkbox.addEventListener('change', handleEnter));
+    </script>
+</body>
+</html>
+

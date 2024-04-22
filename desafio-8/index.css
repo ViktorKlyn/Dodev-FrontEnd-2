@@ -1,0 +1,29 @@
+/* Adicione este trecho no seu arquivo CSS existente */
+
+/* Para telas de 800px ou mais */
+@media (min-width: 800px) {
+    form div {
+        width: 33.33%;
+        float: left;
+        box-sizing: border-box;
+    }
+}
+
+/* Para telas entre 400px e 799px */
+@media (min-width: 400px) and (max-width: 799px) {
+    form div {
+        width: 50%;
+        float: left;
+        box-sizing: border-box;
+    }
+}
+
+/* Para telas menores que 400px */
+@media (max-width: 399px) {
+    form div {
+        width: 100%;
+        float: none; /* Remova a flutuação para que os elementos empilhem verticalmente */
+        box-sizing: border-box;
+    }
+}
+
